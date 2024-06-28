@@ -1,7 +1,7 @@
 docker:
   image: yegor256/rultor-image:1.22.0
 assets:
-  docker-password: yegor256/home#assets/docker-password
+  docker-password: maxonfjvipon/secrets#docker-password
 merge:
   script: |-
     sudo docker build "$(pwd)"
@@ -9,9 +9,9 @@ release:
   pre: false
   script: |-
     [[ "${tag}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || exit -1
-    repo=yegor256/rultor-image
+    repo=maxonfjvipon/rultor-image-js
     sed -i -e "s/^0.0.0/${tag}/" Dockerfile
     sudo docker build "$(pwd)" --tag "${repo}:${tag}"
-    cat ../docker-password | sudo docker login --password-stdin --username yegor256
+    cat ../docker-password | sudo docker login --password-stdin --username maxonfjvipon
     sudo docker push "${repo}:${tag}"
     sudo docker push "${repo}:latest"
