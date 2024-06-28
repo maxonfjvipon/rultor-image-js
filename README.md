@@ -1,3 +1,4 @@
+[![docker](https://github.com/maxonfjvipon/rultor-image-js/actions/workflows/docker-build.yml/badge.svg)](https://github.com/maxonfjvipon/rultor-image-js/actions/workflows/docker-build.yml)
 [![Docker Cloud Automated build](https://img.shields.io/docker/cloud/automated/maxonfjvipon/rultor-image-js)](https://hub.docker.com/r/maxonfjvipon/rultor-image-js)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/maxonfjvipon/total/rultor-image-js/master/LICENSE.txt)
 
