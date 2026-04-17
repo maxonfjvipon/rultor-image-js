@@ -30,9 +30,9 @@ RUN apt-get clean \
   && echo 'export LANGUAGE=en_US.UTF-8' >> /root/.profile \
   && rm -rf /var/lib/apt/lists/*
 
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US.UTF-8
 
 # Basic Linux tools
 RUN apt-get update -y \
@@ -46,9 +46,8 @@ RUN mkdir -p /tmp/download \
   && mv /tmp/download/docker/docker /usr/bin/ \
   && rm -rf /tmp/download
 
-# Git 2.0
-RUN add-apt-repository ppa:git-core/ppa \
-  && apt-get update -y --fix-missing \
+# Git
+RUN apt-get update -y \
   && apt-get -y --no-install-recommends install git \
   && bash -c 'git --version' \
   && rm -rf /var/lib/apt/lists/*
