@@ -29,7 +29,7 @@ jobs:
         with:
           images: maxonfjvipon/rultor-image-js
           tags: |
-            type=ref,event=branch
+            type=raw,value=latest,enable={{is_default_branch}}
             type=ref,event=pr
             type=semver,pattern={{version}}
       - name: Build and push Docker image
