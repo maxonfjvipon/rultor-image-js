@@ -35,7 +35,8 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 
 # Basic Linux tools
-RUN apt-get -y --no-install-recommends install curl \
+RUN apt-get update -y \
+  && apt-get -y --no-install-recommends install curl \
   software-properties-common \
   && rm -rf /var/lib/apt/lists/*
 
@@ -53,13 +54,15 @@ RUN add-apt-repository ppa:git-core/ppa \
   && rm -rf /var/lib/apt/lists/*
 
 # SSH Daemon
-RUN apt-get -y --no-install-recommends install ssh \
+RUN apt-get update -y \
+  && apt-get -y --no-install-recommends install ssh \
   && mkdir /var/run/sshd \
   && chmod 0755 /var/run/sshd \
   && rm -rf /var/lib/apt/lists/*
 
 # Ruby
-RUN apt-get -y --no-install-recommends install ruby-dev libmagic-dev zlib1g-dev openssl \
+RUN apt-get update -y \
+  && apt-get -y --no-install-recommends install ruby-dev libmagic-dev zlib1g-dev openssl \
   && rm -rf /var/lib/apt/lists/* \
   && gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB \
   && curl -L https://get.rvm.io | bash -s stable \
