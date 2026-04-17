@@ -1,0 +1,15 @@
+# SPDX-FileCopyrightText: Copyright (c) 2024-2026 Max Trunnikov
+# SPDX-License-Identifier: MIT
+
+version = 1
+[[annotations]]
+path = [
+    "**README.md",
+    ".gitignore",
+    "**.json",
+    "LICENSE.txt",
+    "LICENSES/MIT.txt",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "Copyright (c) 2024-2026 Max Trunnikov"
+SPDX-License-Identifier = "MIT"

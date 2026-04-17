@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 ---
 # yamllint disable rule:line-length
-name: hadolint
+name: typos
 'on':
   push:
     branches:
@@ -11,9 +11,9 @@ name: hadolint
     branches:
       - master
 jobs:
-  hadolint:
+  typos:
     timeout-minutes: 15
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - uses: hadolint/hadolint-action@v3.1.0
+      - uses: crate-ci/typos@v1.32.0

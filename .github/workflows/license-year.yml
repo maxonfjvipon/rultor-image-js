@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 ---
 # yamllint disable rule:line-length
-name: hadolint
+name: license-year
 'on':
   push:
     branches:
@@ -11,9 +11,13 @@ name: hadolint
     branches:
       - master
 jobs:
-  hadolint:
+  license-year:
     timeout-minutes: 15
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - uses: hadolint/hadolint-action@v3.1.0
+      - name: Check current year in license
+        run: |
+          year=$(date +%Y)
+          grep -q "${year}" LICENSES/MIT.txt || { echo "Current year ${year} not found in LICENSES/MIT.txt"; exit 1; }
+        shell: bash

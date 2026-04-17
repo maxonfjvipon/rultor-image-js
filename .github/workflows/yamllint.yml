@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: MIT
 ---
 # yamllint disable rule:line-length
-name: hadolint
+name: yamllint
 'on':
   push:
     branches:
@@ -11,9 +11,11 @@ name: hadolint
     branches:
       - master
 jobs:
-  hadolint:
+  yamllint:
     timeout-minutes: 15
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
-      - uses: hadolint/hadolint-action@v3.1.0
+      - uses: ibiqlik/action-yamllint@v3
+        with:
+          config-file: .yamllint.yml
