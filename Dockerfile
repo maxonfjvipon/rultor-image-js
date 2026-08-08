@@ -73,7 +73,7 @@ RUN apt-get update -y \
   && bash -l -c ". /etc/profile.d/rvm.sh \
   && rvm use 3.2.2 \
   && gem install bundler -v 2.3.26 \
-  && gem install xcop -v 0.7.1 \
+  && gem install xcop -v 0.11.2 \
   && gem install pdd -v 0.23.1 \
   && gem install openssl -v 3.1.0"
 
