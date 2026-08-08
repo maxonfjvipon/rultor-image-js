@@ -1,0 +1,48 @@
+# SPDX-FileCopyrightText: Copyright (c) 2024-2026 Max Trunnikov
+# SPDX-License-Identifier: MIT
+---
+# yamllint disable rule:line-length
+name: up-xcop
+'on':
+  schedule:
+    - cron: '0 4 * * *'
+  workflow_dispatch:
+concurrency:
+  group: up-xcop-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  up:
+    timeout-minutes: 15
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve the latest and the pinned xcop versions
+        id: version
+        run: |
+          latest=$(curl -sSf https://rubygems.org/api/v1/gems/xcop.json | jq -r '.version')
+          [[ "${latest}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] || { echo "RubyGems answered '${latest}' instead of a version"; exit 1; }
+          pinned=$(grep -oP 'gem install xcop -v \K[0-9.]+' Dockerfile || true)
+          [[ -n "${pinned}" ]] || { echo "The Dockerfile does not pin xcop where this job looks for it"; exit 1; }
+          echo "latest=${latest}" >> "$GITHUB_OUTPUT"
+          echo "pinned=${pinned}" >> "$GITHUB_OUTPUT"
+        shell: bash
+      - name: Pin the Dockerfile to the latest xcop
+        if: steps.version.outputs.latest != steps.version.outputs.pinned
+        env:
+          LATEST: ${{ steps.version.outputs.latest }}
+        run: sed -E -i "s|gem install xcop -v [0-9.]+|gem install xcop -v ${LATEST}|" Dockerfile
+        shell: bash
+      - uses: peter-evans/create-pull-request@v8
+        if: steps.version.outputs.latest != steps.version.outputs.pinned
+        with:
+          token: ${{ secrets.DISPATCH_TOKEN || secrets.GITHUB_TOKEN }}
+          sign-commits: true
+          branch: xcop-version-up
+          commit-message: 'xcop ${{ steps.version.outputs.latest }} in the Dockerfile'
+          delete-branch: true
+          title: 'New xcop version in the Dockerfile'
+          assignees: maxonfjvipon
+          base: master
