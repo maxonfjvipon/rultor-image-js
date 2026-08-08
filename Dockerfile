@@ -30,9 +30,9 @@ RUN apt-get clean \
   && echo 'export LANGUAGE=en_US.UTF-8' >> /root/.profile \
   && rm -rf /var/lib/apt/lists/*
 
-ENV LC_ALL en_US.UTF-8
-ENV LANG en_US.UTF-8
-ENV LANGUAGE en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US.UTF-8
 
 # Basic Linux tools
 RUN apt-get update -y \
@@ -46,9 +46,8 @@ RUN mkdir -p /tmp/download \
   && mv /tmp/download/docker/docker /usr/bin/ \
   && rm -rf /tmp/download
 
-# Git 2.0
-RUN add-apt-repository ppa:git-core/ppa \
-  && apt-get update -y --fix-missing \
+# Git
+RUN apt-get update -y \
   && apt-get -y --no-install-recommends install git \
   && bash -c 'git --version' \
   && rm -rf /var/lib/apt/lists/*
@@ -62,7 +61,7 @@ RUN apt-get update -y \
 
 # Ruby
 RUN apt-get update -y \
-  && apt-get -y --no-install-recommends install ruby-dev libmagic-dev zlib1g-dev openssl \
+  && apt-get -y --no-install-recommends install ruby-dev libmagic-dev zlib1g-dev openssl gnupg \
   && rm -rf /var/lib/apt/lists/* \
   && gpg --keyserver keyserver.ubuntu.com --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3 7D2BAF1CF37B13E2069D6956105BD0E739499BDB \
   && curl -L https://get.rvm.io | bash -s stable \
@@ -74,7 +73,7 @@ RUN apt-get update -y \
   && bash -l -c ". /etc/profile.d/rvm.sh \
   && rvm use 3.2.2 \
   && gem install bundler -v 2.3.26 \
-  && gem install xcop -v 0.7.1 \
+  && gem install xcop -v 0.11.2 \
   && gem install pdd -v 0.23.1 \
   && gem install openssl -v 3.1.0"
 
