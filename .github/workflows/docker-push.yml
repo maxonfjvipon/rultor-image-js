@@ -23,7 +23,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@deaa0dee567db6b95038c14152b037af85a8fe3b
+        uses: docker/metadata-action@703896b4f30f62d53f5530a80bcdc589a3f702bc
         with:
           images: maxonfjvipon/rultor-image-js
           tags: |
